@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ruleset name="JerStandard">
+    <description>Jermaine ignored rules</description>
+    <rule ref="PEAR">
+        <exclude name="PEAR.Commenting"/>
+        <exclude name="PEAR.Whitespace"/>
+        <exclude name="PEAR.Classes.ClassDeclaration.OpenBraceNewLine"/>
+        <exclude name="PEAR.Functions.FunctionDeclaration.BraceOnSameLine" />
+    </rule>
+</ruleset>
