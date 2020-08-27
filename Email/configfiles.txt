@@ -1,0 +1,12 @@
+Set SMTP and auth values
+---------
+C:\xampp\sendmail\sendmail.ini
+smtp_server=smtp.gmail.com
+smtp_port=587
+auth_username=
+auth_password=
+
+C:\xampp\php\php.ini
+SMTP=smtp.gmail.com
+smtp_port=587
+sendmail_path = "\"C:\xampp\sendmail\sendmail.exe\" -t"
