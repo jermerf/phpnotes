@@ -41,6 +41,8 @@ class Posts
 
     $stm->execute();
 
+    $today = new DateTime();
+    $todayDateStr = $today->format("Ymd");
     echo '<ul class="card-list">';
     while ($row = $stm->fetch(PDO::FETCH_ASSOC)) {
       $forUserDelete = ($forCurrentUser || $forAdmin ? <<<DELETEPOST
@@ -65,6 +67,15 @@ class Posts
       </form>
       ADMINAPPROVE : "");
 
+      // Formats date nicely
+      $date = new DateTime($row['posted_on']);
+      $formattedDate = $date->format("l, j F Y");
+
+      $dateStr = $date->format("Ymd");
+      if (strcmp($todayDateStr, $dateStr) == 0) {
+        $formattedDate = "Today at " . $date->format("g:ia");
+      }
+
       echo <<<EACHPOST
       <li>
         $forAdminApprove
@@ -72,7 +83,7 @@ class Posts
         <h3>{$row['content']}</h3>
         <div>
           {$row['username']}
-          <span>{$row['posted_on']}</span>
+          <span>$formattedDate</span>
         </div>
       </li>
       EACHPOST;

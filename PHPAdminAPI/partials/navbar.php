@@ -1,4 +1,5 @@
 <nav>
+  <img id="logo" src="img/logo.png" />
   <a href="index.php">Home</a>
   <?php
 

@@ -10,6 +10,7 @@ $isAdmin = $_SESSION['admin'] ?? false;
 ?>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="img/logo.png">
 <title>Pure PHP App</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <style>
@@ -39,15 +40,20 @@ $isAdmin = $_SESSION['admin'] ?? false;
     padding: 6px 14px;
   }
 
+  #logo {
+    max-height: 2em;
+    margin: -4px 0;
+  }
+
   nav {
     background-color: #444;
-    padding: 7px 10px;
+    padding: 10px 10px;
   }
 
   nav a {
     text-decoration: none;
     color: #ffc;
-    padding: 8px 12px;
+    padding: 11px 12px;
   }
 
   nav a:hover {
@@ -69,7 +75,7 @@ $isAdmin = $_SESSION['admin'] ?? false;
   }
 
   div#currentUser {
-    padding: 8px 12px;
+    padding: 12px 12px;
     cursor: pointer;
     -moz-user-select: none;
     user-select: none;

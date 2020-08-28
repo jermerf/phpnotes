@@ -47,6 +47,8 @@ class UploadedImages
     $stm->execute();
 
 
+    $today = new DateTime();
+    $todayDateStr = $today->format("Ymd");
     echo '<ul class="card-list">';
     while ($row = $stm->fetch(PDO::FETCH_ASSOC)) {
       $uploadPath = UploadedImages::UPLOAD_DIR . $row['stored_name'];
@@ -70,6 +72,15 @@ class UploadedImages
       </form>
       ADMINAPPROVE : "");
 
+      // Formats date nicely
+      $date = new DateTime($row['uploaded_on']);
+      $formattedDate = $date->format("l, j F Y");
+
+      $dateStr = $date->format("Ymd");
+      if (strcmp($todayDateStr, $dateStr) == 0) {
+        $formattedDate = "Today at " . $date->format("g:ia");
+      }
+
       echo <<<EACHUPLOAD
       <li>
         $forAdminApprove
@@ -78,7 +89,7 @@ class UploadedImages
         <h3>{$row['title']}</h3>
         <div>
           {$row['username']}
-          <span>{$row['uploaded_on']}</span>
+          <span>$formattedDate</span>
         </div>
       </li>
       EACHUPLOAD;
