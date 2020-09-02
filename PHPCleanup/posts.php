@@ -22,6 +22,7 @@
   }
   ?>
   <?php Posts::showPosts(true); ?>
+  <?php require 'partials/footer.php'; ?>
   <script>
     if (cookies.statusMsg) {
       document.getElementById('status').innerText = cookies.statusMsg

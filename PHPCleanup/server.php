@@ -29,11 +29,17 @@ switch ($action) {
   case 'addPost':
     addPost();
     break;
+  case 'editPost':
+    editPost();
+    break;
   case 'deletePost':
     deletePost();
     break;
-  case 'editPost':
-    editPost();
+  case 'comment':
+    comment();
+    break;
+  case 'commentsForPost':
+    commentsForPost();
     break;
   case 'uploadFile':
     uploadFile();

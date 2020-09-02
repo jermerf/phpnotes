@@ -48,6 +48,7 @@ if (!$loggedIn) {
       <?php UploadedImages::showUploads(true); ?>
     </div>
   </div>
+  <?php require 'partials/footer.php'; ?>
   <script>
     function chooseFile(event) {
       event.preventDefault()

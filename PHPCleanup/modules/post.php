@@ -144,3 +144,80 @@ function togglePostApproval()
 
   redirect("admin.php");
 }
+
+function comment()
+{
+  session_start();
+  $loggedIn = $_SESSION['userId'] ?? false;
+  $postId = $_POST['postId'] ?? false;
+  $content = $_POST['content'] ?? false;
+
+  if (!($loggedIn && $postId && $content)) {
+    redirect("index.php");
+    setStatusMessage("Missing parameters");
+    return;
+  }
+
+  global $con;
+
+  $query = <<<QUERY
+  INSERT INTO post_comment (user_id, post_id, content, posted_on) 
+  VALUE (:uid, :pid, :content, NOW())
+  QUERY;
+
+  $stm = $con->prepare($query);
+
+  $stm->bindParam(":uid", $_SESSION['userId']);
+  $stm->bindParam(":pid", $postId);
+  $stm->bindParam(":content", $content);
+
+  if ($stm->execute()) {
+    setStatusMessage("Added comment");
+  } else {
+    setStatusMessage("Failed to add comment");
+  }
+  redirect("index.php");
+}
+
+function commentsForPost()
+{
+  header("Content-Type: application/json; charset=UTF-8");
+  $res = new stdClass();
+  $res->success = false;
+
+  $postId = $_POST['postId'];
+
+  if (!$postId) {
+    $res->message = "No postId provided";
+    echo json_encode($res);
+    return;
+  }
+
+  global $con;
+
+  $query = <<<COMMENTSFORPOST
+  SELECT
+    post_comment.content,
+    post_comment.posted_on,
+    session_user.username
+  FROM post_comment
+  INNER JOIN session_user
+    ON post_comment.user_id=session_user.id
+  WHERE post_comment.post_id=:pid
+  COMMENTSFORPOST;
+
+  $stm = $con->prepare($query);
+  $stm->bindParam(':pid', $postId);
+
+  if ($stm->execute()) {
+    $res->success = true;
+    $res->comments = array();
+    while ($row = $stm->fetch(PDO::FETCH_ASSOC)) {
+      array_push($res->comments, $row);
+    }
+  } else {
+    $res->message = "Database error";
+  }
+
+  echo json_encode($res);
+}

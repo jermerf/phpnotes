@@ -9,19 +9,18 @@
   <?php require "partials/navbar.php" ?>
   <h1>Admin</h1>
   <hr>
-  <h3>
-
-    <div class="center">
-      <div class="contain">
-        <i class="fa fa-check"></i>
-        <i class="fa fa-times"></i>
+  <div class="center">
+    <div class="contain">
+      <i class="fa fa-check"></i>
+      <i class="fa fa-times"></i>
 
 
-        <?php Posts::showPosts(false, true) ?>
-        <?php UploadedImages::showUploads(false, true) ?>
-      </div>
+      <?php Posts::showPosts(false, true) ?>
+      <?php UploadedImages::showUploads(false, true) ?>
     </div>
-  </h3>
+  </div>
+
+  <?php require 'partials/footer.php'; ?>
 </body>
 
 </html>

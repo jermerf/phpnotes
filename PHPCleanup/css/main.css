@@ -51,6 +51,10 @@ body,
   h1 {
     text-align: center;
   }
+  footer {
+    padding: 15px;
+    background-color: #222;
+  }
 
   div#loginbox {
     position: absolute;
@@ -149,5 +153,14 @@ body,
   }
 
   form.edit-hidden {
+    display: none;
+  }
+
+  @keyframes dospin{
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .fa.fa-spinner {
+    animation: dospin 1s linear infinite ;
     display: none;
   }

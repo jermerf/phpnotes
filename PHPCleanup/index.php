@@ -11,9 +11,9 @@
   <div class="center">
     <div class="contain">
       <?php Posts::showPosts(); ?>
-      <?php UploadedImages::showUploads(); ?>
     </div>
   </div>
+  <?php require 'partials/footer.php'; ?>
 </body>
 
 </html>

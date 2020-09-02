@@ -12,9 +12,8 @@ class Posts
 
     if ($forAdmin && !$_SESSION['admin']) return;
 
-    global $con;
+    global $con, $loggedIn;
 
-    $forUserPostId = ($forCurrentUser || $forAdmin ? "session_post.id," : "");
     $whereClause = ($forCurrentUser
       ? "WHERE session_post.user_id=:user_id"
       : ($forAdmin ? "" : "WHERE session_post.approved = 1"));
@@ -22,7 +21,7 @@ class Posts
     $query = <<<JOINEDPOSTS
     SELECT 
       session_user.username,
-      $forUserPostId
+      session_post.id,
       session_post.content,
       session_post.posted_on,
       session_post.approved
@@ -57,7 +56,7 @@ class Posts
 
       $forUserEdit = ($forCurrentUser || $forAdmin ? <<<EDITPOST
       <div>
-        <button onclick="toggleEditPost({$row['id']})">
+        <button onclick="togglePostForm({$row['id']}, true)">
           <i class="fa fa-pencil"></i>
         </button>
         
@@ -101,6 +100,27 @@ class Posts
       }
       $content = Posts::processContent($row['content']);
 
+      // Comments
+      $commentsForm = ($loggedIn ? <<<COMMENTFORM
+      <form action="server.php" method="POST" class="edit-hidden">
+        <input name="action" type="hidden" value="comment" />
+        <input name="postId" type="hidden" value="{$row['id']}" />
+        <textarea name="content" cols="60" rows="5"></textarea>
+        <button>Submit</button>
+      </form>
+      COMMENTFORM : "");
+
+      $comments = ($forAdmin || $forCurrentUser ? "" : <<<COMMENTS
+      <div>
+        <button onclick="getPostComments({$row['id']})">
+          <i class="fa fa-comment"></i> Comments
+        </button>
+        <i class="fa fa-spinner"></i>
+        <ul class="comments"></ul>
+        $commentsForm
+      </div>
+      COMMENTS);
+
       echo <<<EACHPOST
       <li $postId>
         $forAdminApprove
@@ -111,6 +131,7 @@ class Posts
           {$row['username']}
           <span>$formattedDate</span>
         </div>
+        $comments
       </li>
       EACHPOST;
     }

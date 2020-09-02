@@ -1,0 +1,41 @@
+server.php
+	requires
+		modules/db.php
+		modules/auth.php
+		modules/post.php
+		modules/upload.php
+	actions
+		auth.php
+			register();					username, password
+			login();					username, password
+			logout();					
+		post.php
+			addPost();					[auth] content
+			editPost();					[auth] content, postId
+			deletePost();				[auth] postId
+			togglePostApproval();		[auth:admin] postId
+		upload.php	
+			uploadFile();				[auth] title, file:newFile
+			deleteUpload();				[auth] uploadId
+			toggleUploadApproval();		[auth:admin] uploadId
+		
+content/Posts.php
+	requires
+		modules/db
+	Class Posts
+		static showPosts($forCurrentUser = false, $forAdmin = false)
+		static processContent($raw)
+		static processContentToken($token)
+		
+content/UploadedImages.php
+	requires
+		modules/db
+	Class UploadedImages
+		static showUploads($forCurrentUser = false, $forAdmin = false)
+		static getImageURL($id)
+		
+		
+		
+		
+		
+		
